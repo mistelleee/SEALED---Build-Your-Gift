@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sealed — Virtual Gifts for Two</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Caveat:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--wine:#4A1225;--rose:#9E4A5A;--rose-soft:#C88A94;--rose-pale:#E8D0D4;--gold:#A07830;--gold-light:#C8A860;--gold-pale:#E8DCC0;--parchment:#F8F3ED;--cream:#FDFBF8;--paper:#F0E8DE;--text-dark:#1E1014;--text-body:#4A3038;--text-muted:#8A7078}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{font-family:'Cormorant Garamond',Georgia,serif;background:var(--parchment);color:var(--text-body);overflow-x:hidden;line-height:1.8;font-size:18px;font-weight:400}
+body::after{content:'';position:fixed;inset:0;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 300 300' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence baseFrequency='0.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.025'/%3E%3C/svg%3E");pointer-events:none;z-index:99999}
+h1,h2,h3{font-family:'Playfair Display',serif;color:var(--text-dark);line-height:1.15;font-weight:500}
+::selection{background:var(--rose-soft);color:var(--text-dark)}
+::-webkit-scrollbar{width:5px}::-webkit-scrollbar-track{background:transparent}::-webkit-scrollbar-thumb{background:var(--rose-pale);border-radius:3px}
+
+nav{position:fixed;top:0;left:0;right:0;z-index:5000;padding:1.4rem 3.5rem;display:flex;justify-content:space-between;align-items:center;background:rgba(248,243,237,0.92);backdrop-filter:blur(24px);border-bottom:1px solid rgba(160,120,48,0.06);transition:all .5s}
+nav.shrink{padding:.9rem 3.5rem;box-shadow:0 1px 40px rgba(74,18,37,0.04)}
+.logo{font-family:'Playfair Display',serif;font-size:1.35rem;font-weight:500;color:var(--wine);text-decoration:none;letter-spacing:.06em}
+.n-links{display:flex;gap:2.8rem;align-items:center}
+.n-links a{text-decoration:none;color:var(--text-muted);font-size:.8rem;font-weight:500;letter-spacing:.12em;text-transform:uppercase;position:relative;transition:color .3s}
+.n-links a::after{content:'';position:absolute;bottom:-4px;left:0;width:0;height:1px;background:var(--gold);transition:width .4s}
+.n-links a:hover{color:var(--wine)}.n-links a:hover::after{width:100%}
+.btn-cta{background:var(--wine);color:var(--gold-pale);padding:.55rem 1.8rem;border-radius:0;text-decoration:none;font-family:'Cormorant Garamond',serif;font-size:.8rem;font-weight:500;letter-spacing:.14em;text-transform:uppercase;transition:all .4s;border:none;cursor:pointer;display:inline-flex;align-items:center;gap:.5rem}
+.btn-cta:hover{background:var(--rose);color:var(--cream)}
+.hero{min-height:100vh;display:flex;align-items:center;justify-content:center;position:relative;padding:6rem 2rem 4rem;overflow:hidden;background:var(--parchment)}
+.hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 30% 40%,rgba(160,120,48,0.04) 0%,transparent 50%),radial-gradient(ellipse at 70% 60%,rgba(74,18,37,0.03) 0%,transparent 50%)}
+.hero-deco{position:absolute;width:1px;height:200px;background:linear-gradient(to bottom,transparent,var(--rose-pale),transparent);opacity:.3}
+.hero-deco:nth-child(1){left:12%;top:10%}.hero-deco:nth-child(2){right:15%;bottom:8%;height:160px}
+.hero-c{max-width:680px;text-align:center;position:relative;z-index:2}
+.hero-line{width:40px;height:1px;background:var(--gold);margin:0 auto 2.5rem;opacity:.5}
+.hero h1{font-size:clamp(2.6rem,6vw,4.4rem);margin-bottom:1.8rem;opacity:0;animation:fadeUp .9s .15s ease forwards;font-weight:400;letter-spacing:.02em}
+.hero h1 em{font-style:italic;color:var(--rose);font-weight:400}
+.hero>p{font-size:1.1rem;color:var(--text-muted);max-width:440px;margin:0 auto 3rem;opacity:0;animation:fadeUp .9s .3s ease forwards;font-weight:300}
+.hero-btns{display:flex;gap:1.5rem;justify-content:center;flex-wrap:wrap;opacity:0;animation:fadeUp .9s .45s ease forwards}
+.btn-outline{background:transparent;color:var(--text-body);padding:.7rem 2.2rem;border-radius:0;text-decoration:none;font-family:'Cormorant Garamond',serif;font-size:.8rem;font-weight:500;letter-spacing:.14em;text-transform:uppercase;transition:all .4s;border:1px solid rgba(74,18,37,0.15);cursor:pointer}
+.btn-outline:hover{border-color:var(--rose);color:var(--rose)}
+.scroll-d{position:absolute;bottom:2.5rem;left:50%;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:.8rem;opacity:0;animation:fadeUp .9s .6s ease forwards}
+.scroll-d span{font-size:.68rem;color:var(--text-muted);letter-spacing:.2em;text-transform:uppercase;font-weight:500}
+.scroll-d i{width:1px;height:30px;background:linear-gradient(to bottom,var(--rose-pale),transparent);display:block;animation:pulse 2.5s ease-in-out infinite}
+@keyframes pulse{0%,100%{opacity:.2}50%{opacity:.8}}
+@keyframes fadeUp{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:translateY(0)}}
+.sec-h{text-align:center;margin-bottom:3.5rem}.sec-h .tag{font-size:.72rem;text-transform:uppercase;letter-spacing:.25em;color:var(--gold);font-weight:500;margin-bottom:1rem;display:block}.sec-h h2{font-size:clamp(1.8rem,3.2vw,2.6rem);font-weight:400}.sec-h p{max-width:420px;margin:1rem auto 0;color:var(--text-muted);font-size:1rem;font-weight:300}
+.gallery{padding:6rem 2rem;background:var(--cream)}.g-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:1.2rem;max-width:1100px;margin:0 auto}
+.g-card{background:var(--parchment);border-radius:2px;padding:2.5rem 2rem;text-align:center;border:1px solid rgba(160,120,48,0.06);transition:all .6s cubic-bezier(.23,1,.32,1);cursor:pointer;opacity:0;transform:translateY(30px)}
+.g-card.vis{opacity:1;transform:translateY(0)}.g-card:hover{transform:translateY(-4px);box-shadow:0 20px 50px rgba(74,18,37,0.05)}
+.g-card svg{width:48px;height:48px;margin-bottom:1.5rem}.g-card h3{font-size:1.2rem;margin-bottom:.6rem;font-weight:500}.g-card p{font-size:.88rem;color:var(--text-muted);line-height:1.6;font-weight:300}
+.creator{padding:6rem 2rem 8rem;background:var(--parchment)}.cr-box{max-width:820px;margin:0 auto;background:var(--cream);border:1px solid rgba(160,120,48,0.06);padding:3rem 3.5rem;box-shadow:0 10px 60px rgba(74,18,37,0.03)}
+.steps{display:flex;justify-content:center;align-items:center;margin-bottom:3.5rem;gap:0;flex-wrap:wrap}
+.st-dot{width:36px;height:36px;border-radius:50%;border:1px solid var(--rose-pale);display:flex;align-items:center;justify-content:center;font-family:'Playfair Display',serif;font-size:.8rem;font-weight:500;color:var(--text-muted);background:var(--cream);transition:all .4s;position:relative;z-index:2}
+.st-dot.on{border-color:var(--wine);color:var(--wine)}.st-dot.done{background:var(--wine);border-color:var(--wine);color:var(--gold-pale)}
+.st-line{width:40px;height:1px;background:var(--rose-pale);transition:background .4s}.st-line.done{background:var(--wine)}
+.st-lbl{position:absolute;top:46px;font-size:.62rem;color:var(--text-muted);white-space:nowrap;left:50%;transform:translateX(-50%);letter-spacing:.08em;text-transform:uppercase;font-weight:500}.st-lbl.on{color:var(--wine)}
+.sp{display:none;animation:fadeUp .4s ease}.sp.on{display:block}
+.gt-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:.8rem;margin-bottom:2rem}
+.gt{background:var(--parchment);border:1px solid transparent;padding:1.8rem 1rem;text-align:center;cursor:pointer;transition:all .35s;position:relative}
+.gt:hover{border-color:rgba(160,120,48,0.12);transform:translateY(-2px)}.gt.sel{border-color:var(--wine);background:rgba(74,18,37,0.015)}
+.gt.sel::after{content:'';position:absolute;top:10px;right:10px;width:6px;height:6px;background:var(--wine);border-radius:50%}
+.gt svg{width:36px;height:36px;margin-bottom:1rem;opacity:.7}.gt.sel svg,.gt:hover svg{opacity:1}
+.gt h4{font-size:.95rem;margin-bottom:.2rem;font-weight:500}.gt p{font-size:.75rem;color:var(--text-muted);font-weight:300}
+.row2{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:1.5rem}
+.ig{display:flex;flex-direction:column;gap:.35rem}.ig label{font-size:.7rem;color:var(--text-muted);font-weight:500;letter-spacing:.1em;text-transform:uppercase}
+.ig input,.ig textarea,.ig select{font-family:'Cormorant Garamond',serif;font-size:1rem;color:var(--text-dark);background:var(--parchment);border:1px solid rgba(74,18,37,0.08);padding:.85rem 1rem;outline:none;transition:all .3s}
+.ig input:focus,.ig textarea:focus,.ig select:focus{border-color:var(--rose);box-shadow:0 0 0 3px rgba(158,74,90,0.04)}
+.ig textarea{min-height:240px;resize:vertical;line-height:2;font-size:1.05rem}
+.ig input::placeholder,.ig textarea::placeholder{color:var(--rose-pale)}
+.ig select{appearance:none;background-image:url("data:image/svg+xml,%3Csvg width='12' height='8' viewBox='0 0 12 8' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%238A7078' fill='none' stroke-width='1.5'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 1rem center;padding-right:2.5rem}
+.cnt{text-align:right;font-size:.72rem;color:var(--text-muted);margin-top:.5rem}.cnt b{color:var(--rose);font-weight:500}
+.th-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:.6rem;margin-bottom:1.5rem}
+.th{height:48px;cursor:pointer;transition:all .35s;border:2px solid transparent;position:relative}
+.th:hover{transform:scale(1.02)}.th.sel{border-color:var(--wine);transform:scale(1.02)}
+.th.sel::after{content:'';position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:8px;height:8px;border:1.5px solid white;border-radius:50%;box-shadow:0 0 4px rgba(0,0,0,0.3)}
+.extra-section{margin-bottom:1.2rem;padding:1.5rem 1.8rem;background:var(--parchment);border:1px solid rgba(160,120,48,0.05)}
+.extra-section h4{font-size:1rem;margin-bottom:.2rem;font-weight:500}.extra-section>p{font-size:.82rem;color:var(--text-muted);margin-bottom:1rem;font-weight:300}
+.extra-item{display:flex;gap:.5rem;margin-bottom:.5rem;align-items:center}
+.extra-item input{flex:1;font-family:'Cormorant Garamond',serif;font-size:.92rem;padding:.6rem .8rem;border:1px solid rgba(74,18,37,0.06);background:var(--cream);outline:none}
+.extra-item input:focus{border-color:var(--rose)}
+.btn-rm{background:none;border:none;color:var(--text-muted);font-size:1.1rem;cursor:pointer;padding:.2rem .4rem;opacity:.5}.btn-rm:hover{color:var(--rose);opacity:1}
+.btn-add{background:none;border:1px dashed rgba(74,18,37,0.1);color:var(--text-muted);padding:.55rem 1rem;font-family:'Cormorant Garamond',serif;font-size:.82rem;cursor:pointer;transition:all .3s;width:100%}.btn-add:hover{border-color:var(--rose);color:var(--rose)}
+.toggle-row{display:flex;align-items:center;justify-content:space-between;padding:.85rem 0;border-bottom:1px solid rgba(160,120,48,0.04)}.toggle-row:last-child{border:none}
+.toggle-row span{font-size:.88rem;color:var(--text-body)}
+.toggle{width:40px;height:20px;background:var(--rose-pale);border-radius:10px;cursor:pointer;position:relative;transition:background .3s;flex-shrink:0}.toggle.on{background:var(--wine)}
+.toggle::after{content:'';position:absolute;top:2px;left:2px;width:16px;height:16px;background:white;border-radius:50%;transition:transform .3s;box-shadow:0 1px 3px rgba(0,0,0,0.1)}.toggle.on::after{transform:translateX(20px)}
+.sp-nav{display:flex;justify-content:space-between;align-items:center;margin-top:2rem;padding-top:1.5rem;border-top:1px solid rgba(160,120,48,0.05)}
+.btn-bk{background:none;border:none;font-family:'Cormorant Garamond',serif;font-size:.85rem;color:var(--text-muted);cursor:pointer;transition:color .3s;padding:.7rem 0;letter-spacing:.08em;text-transform:uppercase;font-weight:500}.btn-bk:hover{color:var(--wine)}
+.btn-nx{background:var(--wine);color:var(--gold-pale);padding:.75rem 2rem;border:0;font-family:'Cormorant Garamond',serif;font-size:.8rem;font-weight:500;cursor:pointer;transition:all .3s;letter-spacing:.12em;text-transform:uppercase}.btn-nx:hover{background:var(--rose);color:var(--cream)}.btn-nx:disabled{opacity:.25;cursor:not-allowed}
+
+/* EXPERIENCE */
+.exp-overlay{position:fixed;inset:0;z-index:20000;background:var(--parchment);display:none;overflow-y:auto}
+.exp-overlay.open{display:block}
+.exp-close{position:fixed;top:1.8rem;right:2rem;z-index:20100;width:40px;height:40px;border-radius:50%;background:rgba(0,0,0,0.06);backdrop-filter:blur(8px);border:1px solid rgba(255,255,255,0.15);font-size:1.2rem;color:rgba(255,255,255,0.6);cursor:pointer;transition:all .3s;display:flex;align-items:center;justify-content:center}
+.exp-close:hover{background:rgba(0,0,0,0.15);color:white}
+.exp-stage{position:relative;min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:5rem 2rem;overflow:hidden;z-index:1}
+.exp-bg{position:absolute;inset:0;z-index:0;transition:all 1s}
+.exp-bg.t-rose{background:linear-gradient(160deg,#0E0408 0%,#160810 8%,#1E0C16 16%,#2A101C 24%,#3A1624 32%,#4E1E2E 40%,#682A3C 48%,#843A4C 56%,#9E4E5E 64%,#B86878 72%,#D49098 80%,#E8B4B8 88%,#F2D0D4 96%,#F8E8EA 100%)}
+.exp-bg.t-midnight{background:linear-gradient(160deg,#02010A 0%,#040214 10%,#080620 20%,#0E0A2E 30%,#160E3E 40%,#1E144E 50%,#281C60 60%,#342870 70%,#403480 78%,#4E4290 86%,#6050A0 93%,#7868B0 100%)}
+.exp-bg.t-champagne{background:linear-gradient(160deg,#0A0600 0%,#140E04 10%,#1E1608 20%,#2A1E10 30%,#382818 40%,#483420 50%,#5A4228 58%,#6E5230 66%,#886838 74%,#A48040 82%,#C09848 88%,#D8B058 94%,#E8C870 100%)}
+.exp-bg.t-evergreen{background:linear-gradient(160deg,#020A02 0%,#061206 10%,#0A1A0A 20%,#102410 30%,#162E16 40%,#1E3A1E 50%,#284828 60%,#345830 70%,#406A3A 78%,#4E7C44 86%,#5C8E50 93%,#6CA05C 100%)}
+.exp-bg.t-lavender{background:linear-gradient(160deg,#08041A 0%,#10082A 10%,#180E3C 20%,#201450 30%,#2A1A62 40%,#362274 50%,#422A86 60%,#503498 70%,#6040A8 78%,#704EB8 86%,#8460C8 93%,#9878D8 100%)}
+.exp-bg.t-coral{background:linear-gradient(160deg,#0E0604 0%,#1A0C08 10%,#281410 20%,#381E18 30%,#4A2820 40%,#5E3428 50%,#724030 60%,#885038 70%,#A06242 78%,#B87650 86%,#D08C60 93%,#E0A478 100%)}
+.exp-bg.t-noir{background:linear-gradient(160deg,#020202 0%,#080808 12%,#0E0E0E 24%,#161616 36%,#1E1E1E 48%,#282828 58%,#303030 68%,#3A3A3A 78%,#444444 86%,#505050 93%,#5A5A5A 100%)}
+.exp-bg.t-autumn{background:linear-gradient(160deg,#080400 0%,#100800 10%,#1A0E02 20%,#261608 30%,#341E0E 40%,#422814 50%,#52321A 60%,#643E22 70%,#784A2A 78%,#8E5834 86%,#A4683E 93%,#BA7A4A 100%)}
+
+#loveRain{position:absolute;inset:0;z-index:1;pointer-events:none}
+
+/* Puzzle */
+.puzzle-gate{position:relative;z-index:3;text-align:center;max-width:400px;width:100%;display:none}.puzzle-gate.show{display:block;animation:fadeUp .5s ease forwards}
+.puzzle-card{background:rgba(255,255,255,0.05);backdrop-filter:blur(24px);border:1px solid rgba(255,255,255,0.07);padding:3rem 2.5rem}
+.puzzle-card .lock-icon{width:40px;height:40px;margin:0 auto 1.5rem;opacity:.4}
+.puzzle-card h3{font-family:'Playfair Display',serif;font-size:1.3rem;color:rgba(255,255,255,0.85);margin-bottom:.5rem;font-weight:400}
+.puzzle-card .puzzle-q{font-family:'Caveat',cursive;font-size:1.3rem;color:rgba(255,255,255,0.55);margin-bottom:2rem;line-height:1.5}
+.puzzle-card input{width:100%;font-family:'Cormorant Garamond',serif;font-size:1rem;padding:.9rem 1.2rem;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);color:white;outline:none;transition:all .3s;text-align:center}
+.puzzle-card input::placeholder{color:rgba(255,255,255,0.18)}.puzzle-card input:focus{border-color:rgba(255,255,255,0.25);background:rgba(255,255,255,0.08)}
+.puzzle-card .puzzle-btn{margin-top:1.2rem;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.12);color:rgba(255,255,255,0.6);padding:.75rem 2.5rem;font-family:'Cormorant Garamond',serif;font-size:.82rem;letter-spacing:.12em;text-transform:uppercase;cursor:pointer;transition:all .3s}
+.puzzle-card .puzzle-btn:hover{background:rgba(255,255,255,0.12);color:white}
+.puzzle-card .puzzle-err{margin-top:1rem;font-size:.8rem;color:rgba(200,120,120,0.6);display:none}
+
+/* ENVELOPE */
+.env-wrap{position:relative;z-index:3;perspective:1400px;display:none;overflow:visible}
+.env-wrap.show{display:block;animation:envelopeEnter .6s cubic-bezier(.23,1,.32,1) forwards}
+@keyframes envelopeEnter{from{opacity:0;transform:translateY(30px) scale(0.96)}to{opacity:1;transform:translateY(0) scale(1)}}
+
+.envelope{width:420px;height:280px;position:relative;cursor:pointer;transform-style:preserve-3d;overflow:visible}
+.envelope:hover .seal{transform:translate(-50%,-50%) scale(1.08)}
+
+.env-body{width:100%;height:100%;position:relative;border-radius:3px;z-index:5;
+  background:#E2D6C2;
+  box-shadow:inset 0 2px 0 rgba(255,255,255,0.35),inset 0 -2px 0 rgba(0,0,0,0.04),inset 2px 0 0 rgba(255,255,255,0.08),inset -2px 0 0 rgba(0,0,0,0.02),0 2px 4px rgba(0,0,0,0.04),0 6px 16px rgba(0,0,0,0.06),0 14px 36px rgba(0,0,0,0.08),0 30px 65px rgba(0,0,0,0.07);
+  border:1px solid rgba(180,160,120,0.12)}
+.env-body::before{content:'';position:absolute;inset:0;border-radius:3px;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='p'%3E%3CfeTurbulence baseFrequency='1.2' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23p)' opacity='0.025'/%3E%3C/svg%3E");pointer-events:none;z-index:1}
+.env-body::after{content:'';position:absolute;inset:12px;border:1px solid rgba(160,130,60,0.06);border-radius:1px;pointer-events:none;z-index:1}
+
+.env-flap{position:absolute;top:0;left:0;right:0;height:56%;z-index:8;
+  background:#D2C6AE;
+  clip-path:polygon(0 0,100% 0,50% 100%);
+  transform-origin:top center;
+  box-shadow:0 2px 8px rgba(0,0,0,0.04)}
+.env-flap::after{content:'';position:absolute;inset:0;background:linear-gradient(180deg,rgba(255,255,255,0.12) 0%,transparent 40%,transparent 70%,rgba(0,0,0,0.025) 100%);clip-path:polygon(0 0,100% 0,50% 100%);pointer-events:none}
+.env-flap.opening{transform:rotateX(180deg);transition:transform .7s cubic-bezier(.23,1,.32,1)}
+
+.env-liner{position:absolute;bottom:0;left:0;right:0;height:52%;z-index:1;overflow:hidden}
+.env-liner::before{content:'';position:absolute;inset:0;background:linear-gradient(45deg,rgba(160,120,48,0.012) 25%,transparent 25%),linear-gradient(-45deg,rgba(160,120,48,0.012) 25%,transparent 25%),linear-gradient(45deg,transparent 75%,rgba(160,120,48,0.012) 75%),linear-gradient(-45deg,transparent 75%,rgba(160,120,48,0.012) 75%);background-size:16px 16px;background-position:0 0,0 8px,8px -8px,-8px 0}
+.env-liner::after{content:'';position:absolute;bottom:0;left:50%;transform:translateX(-50%);width:0;height:0;border-left:210px solid transparent;border-right:210px solid transparent;border-top:110px solid rgba(74,18,37,0.012)}
+
+.env-card{position:absolute;bottom:16px;left:50%;transform:translateX(-50%);width:74%;height:52%;
+  background:#FDFAF4;border-radius:2px;z-index:3;
+  box-shadow:0 1px 3px rgba(0,0,0,0.03),0 4px 12px rgba(0,0,0,0.03);
+  border:1px solid rgba(200,180,140,0.06)}
+.env-card::before{content:'';position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:50px;height:50px;border-radius:50%;border:1px solid rgba(74,18,37,0.03)}
+
+/* Card rises ABOVE envelope */
+.env-card.rising{z-index:20;transform:translateX(-50%) translateY(-200%) rotate(-0.5deg);
+  transition:transform 1s cubic-bezier(.23,1,.32,1)}
+.env-card.risen{z-index:20;transform:translateX(-50%) translateY(-200%) rotate(0deg);
+  transition:transform .3s ease}
+
+.env-light{position:absolute;top:5%;left:5%;right:5%;bottom:5%;
+  background:radial-gradient(ellipse at 50% 70%,rgba(255,230,180,0.6),rgba(255,200,120,0.2) 50%,transparent 80%);
+  opacity:0;z-index:6;pointer-events:none;transition:opacity .6s ease;border-radius:2px}
+
+.envelope.dissolving{opacity:0;transform:translateY(20px) scale(0.95);transition:all .5s cubic-bezier(.4,0,.2,1)}
+.env-wrap.fading{opacity:0;transform:translateY(-20px);transition:all .4s ease}
+
+/* WAX SEAL */
+.seal{position:absolute;top:47%;left:50%;transform:translate(-50%,-50%);
+  width:80px;height:80px;border-radius:50%;z-index:30;
+  background:radial-gradient(ellipse at 28% 22%,rgba(255,150,150,0.1),transparent 50%),radial-gradient(ellipse at 72% 72%,rgba(40,8,8,0.3),transparent 45%),radial-gradient(circle at 50% 48%,#C43030 0%,#B02828 15%,#982020 30%,#801818 48%,#681414 65%,#541010 80%,#440C0C 100%);
+  box-shadow:0 0 0 3px rgba(70,12,12,0.6),0 0 0 5px rgba(100,20,20,0.12),inset 0 4px 8px rgba(255,160,160,0.1),inset 0 -5px 10px rgba(0,0,0,0.4),inset 3px 0 8px rgba(255,140,140,0.05),inset -3px 0 8px rgba(0,0,0,0.15),0 8px 20px rgba(0,0,0,0.3),0 16px 40px rgba(0,0,0,0.18);
+  display:flex;align-items:center;justify-content:center;transition:all .25s;overflow:visible}
+.seal::after{content:'';position:absolute;inset:8px;border-radius:50%;border:1.5px solid rgba(255,140,140,0.06);box-shadow:0 1px 0 rgba(0,0,0,0.1),inset 0 1px 0 rgba(255,160,160,0.04);pointer-events:none}
+.seal::before{content:'';position:absolute;bottom:-8px;left:50%;transform:translateX(-50%);width:24px;height:13px;background:radial-gradient(ellipse at 50% 15%,#801818 0%,#541010 80%);border-radius:0 0 55% 55%;box-shadow:0 3px 6px rgba(0,0,0,0.2)}
+.seal-letter{font-family:'Playfair Display',serif;font-size:1.7rem;font-weight:600;color:rgba(30,6,6,0.4);text-shadow:0 1.5px 0 rgba(255,160,160,0.08),0 -0.5px 0 rgba(0,0,0,0.12);user-select:none;position:relative;z-index:1}
+.seal.glowing{box-shadow:0 0 0 3px rgba(70,12,12,0.6),0 0 0 5px rgba(100,20,20,0.12),0 0 30px rgba(200,60,60,0.35),0 0 60px rgba(200,60,60,0.15),inset 0 4px 8px rgba(255,160,160,0.2),inset 0 -5px 10px rgba(0,0,0,0.4),0 8px 20px rgba(0,0,0,0.3),0 16px 40px rgba(0,0,0,0.18);transform:translate(-50%,-50%) scale(1.06)}
+.seal.burst{animation:sealBurst .45s cubic-bezier(.55,.06,.68,.19) forwards}
+@keyframes sealBurst{0%{transform:translate(-50%,-50%) scale(1.06);opacity:1;filter:brightness(1)}20%{transform:translate(-50%,-50%) scale(1.2);opacity:1;filter:brightness(1.3)}50%{transform:translate(-50%,-50%) scale(1.15);opacity:.7;filter:brightness(1.1)}100%{transform:translate(-50%,-50%) scale(0);opacity:0;filter:brightness(0.5)}}
+
+.env-hint{font-family:'Cormorant Garamond',serif;font-size:.72rem;color:rgba(255,255,255,0.25);text-align:center;margin-top:2rem;letter-spacing:.18em;text-transform:uppercase;position:relative;z-index:3}
+
+/* Letter */
+.letter-reveal{display:none;position:relative;z-index:3;max-width:520px;width:100%}
+.letter-reveal.show{display:block}
+.letter-reveal.entering{animation:letterEnter .7s cubic-bezier(.23,1,.32,1) forwards}
+@keyframes letterEnter{from{opacity:0;transform:translateY(50px) scale(0.97)}to{opacity:1;transform:translateY(0) scale(1)}}
+.letter-paper{background:var(--paper);padding:3.5rem 3rem;box-shadow:0 25px 70px rgba(0,0,0,0.2);position:relative;max-height:68vh;overflow-y:auto;border:1px solid rgba(160,120,48,0.06)}
+.letter-paper::before{content:'';position:absolute;top:0;left:45px;right:45px;height:100%;background:repeating-linear-gradient(transparent,transparent 35px,rgba(74,18,37,0.04) 35px,rgba(74,18,37,0.04) 36px);pointer-events:none}
+.letter-deco-top{width:30px;height:1px;background:var(--gold);margin:0 auto 2rem;opacity:.4}
+.letter-names{font-family:'Playfair Display',serif;font-size:1.7rem;text-align:center;margin-bottom:.3rem;font-weight:400;letter-spacing:.04em}
+.letter-sub{font-family:'Caveat',cursive;font-size:1.15rem;text-align:center;color:var(--text-muted);margin-bottom:2.5rem}
+.letter-body{font-family:'Caveat',cursive;font-size:1.2rem;line-height:2.1;color:var(--text-body);white-space:pre-wrap;word-wrap:break-word;position:relative;z-index:1}
+.letter-body .cursor{display:inline-block;width:1.5px;height:1.1em;background:var(--rose);margin-left:2px;animation:blink .8s step-end infinite;vertical-align:text-bottom}
+@keyframes blink{50%{opacity:0}}
+.letter-sig{text-align:right;font-family:'Caveat',cursive;font-size:1.3rem;color:var(--wine);margin-top:2.5rem;position:relative;z-index:1}
+.letter-deco-bot{width:20px;height:1px;background:var(--gold);margin:1.5rem auto 0;opacity:.3}
+
+.coupon-stack{display:none;flex-wrap:wrap;gap:1rem;justify-content:center;margin-top:2.5rem;position:relative;z-index:3;max-width:600px}
+.coupon-stack.show{display:flex;animation:fadeUp .5s ease .3s forwards;opacity:0}
+.cp-card{width:160px;height:95px;background:var(--paper);cursor:pointer;transition:transform .6s cubic-bezier(.23,1,.32,1);transform-style:preserve-3d;position:relative;box-shadow:0 4px 18px rgba(0,0,0,0.1)}
+.cp-card.flipped{transform:rotateY(180deg)}.cp-face{position:absolute;inset:0;backface-visibility:hidden;display:flex;align-items:center;justify-content:center;padding:.8rem;text-align:center}
+.cp-front{background:linear-gradient(135deg,var(--rose-pale),var(--paper));font-family:'Caveat',cursive;font-size:1rem;color:var(--wine)}
+.cp-front::after{content:'tap';position:absolute;bottom:6px;font-size:.58rem;color:var(--text-muted);font-family:'Cormorant Garamond',serif;letter-spacing:.1em;text-transform:uppercase}
+.cp-back{background:var(--wine);color:var(--gold-pale);transform:rotateY(180deg);font-family:'Caveat',cursive;font-size:.92rem;line-height:1.5}
+.ow-stack{display:none;flex-wrap:wrap;gap:1rem;justify-content:center;margin-top:2.5rem;position:relative;z-index:3;max-width:600px}
+.ow-stack.show{display:flex;animation:fadeUp .5s ease .3s forwards;opacity:0}
+.ow-env{width:135px;height:85px;background:linear-gradient(160deg,#F0E8DE,#D8C8B4);cursor:pointer;position:relative;transition:all .4s;box-shadow:0 3px 12px rgba(0,0,0,0.08);display:flex;align-items:center;justify-content:center}
+.ow-env span{font-family:'Caveat',cursive;font-size:.82rem;color:var(--wine);text-align:center;padding:.4rem .8rem;position:relative;z-index:2}
+.ow-env::before{content:'';position:absolute;top:0;left:0;right:0;height:45%;background:linear-gradient(180deg,#D8C8B4,#CCC0A8);clip-path:polygon(0 0,100% 0,50% 100%);z-index:1;transition:transform .5s;transform-origin:top center}
+.ow-env:hover{transform:translateY(-2px)}.ow-env.opened{pointer-events:none;opacity:.4}.ow-env.opened::before{transform:rotateX(180deg)}
+.ow-modal{position:fixed;inset:0;z-index:20200;background:rgba(20,10,14,0.9);backdrop-filter:blur(12px);display:none;align-items:center;justify-content:center;padding:2rem}
+.ow-modal.open{display:flex}
+.ow-modal-inner{background:var(--paper);padding:3rem;max-width:460px;width:100%;position:relative;animation:fadeUp .4s ease;box-shadow:0 25px 70px rgba(0,0,0,0.3)}
+.ow-modal-inner h3{font-family:'Caveat',cursive;font-size:1.5rem;margin-bottom:1.2rem;color:var(--wine)}
+.ow-modal-inner p{font-family:'Caveat',cursive;font-size:1.1rem;line-height:1.9;color:var(--text-body);white-space:pre-wrap}
+.ow-modal-close{position:absolute;top:1.2rem;right:1.2rem;background:none;border:none;font-size:1.1rem;color:var(--text-muted);cursor:pointer}
+.ow-modal-close:hover{color:var(--wine)}
+.tl-wrap{display:none;position:relative;z-index:3;max-width:460px;width:100%;margin-top:2rem}
+.tl-wrap.show{display:block;animation:fadeUp .5s ease .3s forwards;opacity:0}
+.tl-item{display:flex;gap:1.2rem;align-items:flex-start;margin-bottom:2rem;opacity:0;transform:translateX(-15px);transition:all .6s ease}.tl-item.vis{opacity:1;transform:translateX(0)}
+.tl-dot-col{display:flex;flex-direction:column;align-items:center;flex-shrink:0}
+.tl-dot{width:10px;height:10px;border-radius:50%;background:rgba(255,255,255,0.7);border:1px solid rgba(255,255,255,0.3)}
+.tl-vline{width:1px;height:35px;background:rgba(255,255,255,0.1)}
+.tl-content{background:rgba(255,255,255,0.06);backdrop-filter:blur(12px);border:1px solid rgba(255,255,255,0.06);padding:1rem 1.3rem;flex:1}
+.tl-date{font-family:'Cormorant Garamond',serif;font-size:.85rem;color:rgba(255,255,255,0.4);margin-bottom:.2rem;font-weight:500}
+.tl-text{font-family:'Caveat',cursive;font-size:1.05rem;color:rgba(255,255,255,0.85);line-height:1.6}
+.recipe-wrap{display:none;position:relative;z-index:3;max-width:480px;width:100%}.recipe-wrap.show{display:block;animation:fadeUp .6s ease .2s forwards;opacity:0}
+.recipe-paper{background:var(--paper);padding:3rem 2.5rem;box-shadow:0 25px 70px rgba(0,0,0,0.2)}
+.recipe-paper h3{font-family:'Playfair Display',serif;font-size:1.4rem;text-align:center;margin-bottom:.2rem;font-weight:400}
+.recipe-paper .r-sub{text-align:center;font-family:'Caveat',cursive;font-size:1rem;color:var(--text-muted);margin-bottom:2.5rem}
+.recipe-paper .r-section{margin-bottom:1.8rem}
+.recipe-paper .r-section h4{font-family:'Cormorant Garamond',serif;font-size:.75rem;margin-bottom:.6rem;color:var(--gold);text-transform:uppercase;letter-spacing:.15em;font-weight:500}
+.recipe-paper .r-item{font-family:'Caveat',cursive;font-size:1.05rem;line-height:1.9;padding-left:1rem;border-left:1px solid var(--rose-pale);margin-bottom:.2rem;color:var(--text-body)}
+.share-panel{text-align:center;padding:2rem 0}.share-panel .icon-big{width:64px;height:64px;margin:0 auto 1.5rem;border:1px solid rgba(74,18,37,0.1);display:flex;align-items:center;justify-content:center}
+.share-panel .icon-big svg{width:28px;height:28px;fill:none;stroke:var(--wine);stroke-width:1.5}.share-panel h3{font-size:1.4rem;margin-bottom:.5rem;font-weight:400}
+.share-panel>p{color:var(--text-muted);margin-bottom:2rem;max-width:340px;margin-left:auto;margin-right:auto;font-size:.92rem;font-weight:300}
+.qr-box{width:170px;height:170px;margin:0 auto 1.5rem;background:white;padding:10px;box-shadow:0 4px 20px rgba(0,0,0,0.04)}.qr-box img{width:100%;height:100%;object-fit:contain}
+.link-row{display:flex;gap:.4rem;max-width:460px;margin:0 auto 1.5rem}.link-row input{flex:1;font-family:'Cormorant Garamond',serif;font-size:.85rem;padding:.8rem 1rem;border:1px solid rgba(74,18,37,0.08);background:var(--parchment);color:var(--text-body);outline:none}
+.btn-cp{background:var(--gold);color:white;padding:.8rem 1.2rem;border:none;font-family:'Cormorant Garamond',serif;font-weight:500;font-size:.78rem;cursor:pointer;transition:all .3s;white-space:nowrap;letter-spacing:.08em;text-transform:uppercase}.btn-cp:hover{background:var(--gold-light)}.btn-cp.done{background:#5a8a5a}
+.share-row{display:flex;justify-content:center;gap:.6rem;flex-wrap:wrap}
+.sh-btn{display:flex;align-items:center;gap:.4rem;padding:.6rem 1.1rem;border:1px solid rgba(74,18,37,0.08);background:var(--cream);font-family:'Cormorant Garamond',serif;font-size:.78rem;color:var(--text-muted);cursor:pointer;transition:all .3s;letter-spacing:.06em;text-transform:uppercase;font-weight:500}.sh-btn:hover{border-color:var(--rose);color:var(--rose)}
+footer{background:var(--text-dark);color:rgba(240,236,228,0.35);padding:4rem 2rem 2rem;text-align:center}
+footer .f-logo{font-family:'Playfair Display',serif;font-size:1.4rem;font-weight:400;color:var(--rose-soft);margin-bottom:.5rem;letter-spacing:.06em}footer p{font-size:.82rem;line-height:1.6;font-weight:300}
+footer .f-line{width:30px;height:1px;background:rgba(200,138,148,0.2);margin:1.5rem auto}
+footer .f-links{display:flex;justify-content:center;gap:2.5rem;margin-top:2rem;padding-top:2rem;border-top:1px solid rgba(240,236,228,0.04)}
+footer .f-links a{color:rgba(240,236,228,0.25);text-decoration:none;font-size:.72rem;letter-spacing:.12em;text-transform:uppercase;font-weight:500;transition:color .3s}
+footer .f-links a:hover{color:var(--rose-soft)}
+@media(max-width:768px){nav{padding:1rem 1.5rem}.n-links{display:none}.gt-grid{grid-template-columns:repeat(2,1fr)}.row2{grid-template-columns:1fr}.cr-box{padding:2rem 1.5rem}.st-line{width:20px}.letter-paper{padding:2rem 1.5rem}.envelope{width:300px;height:200px}.seal{width:60px;height:60px}.seal-letter{font-size:1.3rem}.seal::before{width:18px;height:10px;bottom:-6px}}
+</style>
+</head>
+<body>
+
+<nav id="nav"><a href="#" class="logo">SEALED</a><div class="n-links"><a href="#gallery">Collection</a><a href="#creator">Create</a><a href="#creator" class="btn-cta">Begin</a></div></nav>
+
+<section class="hero"><div class="hero-deco"></div><div class="hero-deco"></div><div class="hero-c"><div class="hero-line"></div><h1>A Gift They<br>Can <em>Feel</em></h1><p>An intimate, interactive virtual gift wrapped in elegance. Unlimited words. One unforgettable experience.</p><div class="hero-btns"><a href="#creator" class="btn-cta" style="padding:.85rem 2.8rem;font-size:.85rem">Create Your Gift</a><a href="#gallery" class="btn-outline">View Collection</a></div></div><div class="scroll-d"><span>Scroll</span><i></i></div></section>
+
+<section class="gallery" id="gallery">
+  <div class="sec-h reveal"><span class="tag">The Collection</span><h2>Six Gestures, Endless Meaning</h2><p>Each piece is crafted to become an intimate, memorable experience.</p></div>
+  <div class="g-grid">
+    <div class="g-card reveal" data-type="letter"><svg viewBox="0 0 48 48"><rect x="6" y="12" width="36" height="26" rx="1" fill="none" stroke="#4A1225" stroke-width="1.5"/><polyline points="6,12 24,28 42,12" fill="none" stroke="#4A1225" stroke-width="1.5"/></svg><h3>The Sealed Letter</h3><p>A wax-sealed envelope that opens to reveal your words on lined parchment.</p></div>
+    <div class="g-card reveal" data-type="starmap"><svg viewBox="0 0 48 48"><circle cx="24" cy="24" r="18" fill="none" stroke="#4A1225" stroke-width="1.5"/><circle cx="18" cy="20" r="1.5" fill="#9E4A5A"/><circle cx="30" cy="18" r="1.2" fill="#9E4A5A"/></svg><h3>Star Map</h3><p>The night sky from a date that changed everything.</p></div>
+    <div class="g-card reveal" data-type="coupons"><svg viewBox="0 0 48 48"><rect x="6" y="14" width="36" height="20" rx="1" fill="none" stroke="#4A1225" stroke-width="1.5" stroke-dasharray="3 2"/><line x1="16" y1="14" x2="16" y2="34" stroke="#4A1225" stroke-width="1" opacity=".3"/></svg><h3>Love Coupons</h3><p>Redeemable gestures they can collect and turn in whenever they wish.</p></div>
+    <div class="g-card reveal" data-type="openwhen"><svg viewBox="0 0 48 48"><rect x="10" y="16" width="28" height="18" rx="1" fill="none" stroke="#4A1225" stroke-width="1.5"/><polyline points="10,16 24,28 38,16" fill="none" stroke="#4A1225" stroke-width="1.5"/></svg><h3>Open When</h3><p>Letters sealed for specific moments.</p></div>
+    <div class="g-card reveal" data-type="timeline"><svg viewBox="0 0 48 48"><line x1="24" y1="6" x2="24" y2="42" stroke="#4A1225" stroke-width="1.5"/><circle cx="24" cy="14" r="3" fill="none" stroke="#9E4A5A" stroke-width="1.5"/><circle cx="24" cy="30" r="3" fill="none" stroke="#9E4A5A" stroke-width="1.5"/></svg><h3>Our Story</h3><p>An animated chronicle of the moments that built your relationship.</p></div>
+    <div class="g-card reveal" data-type="recipe"><svg viewBox="0 0 48 48"><rect x="10" y="8" width="28" height="32" rx="1" fill="none" stroke="#4A1225" stroke-width="1.5"/><line x1="16" y1="18" x2="32" y2="18" stroke="#9E4A5A" stroke-width="1" opacity=".4"/></svg><h3>Recipe of Us</h3><p>A recipe card with the ingredients and instructions of your love.</p></div>
+  </div>
+</section>
+
+<section class="creator" id="creator">
+  <div class="sec-h reveal"><span class="tag">Compose</span><h2>Build Your Gift</h2></div>
+  <div class="cr-box">
+    <div class="steps"><div class="st-dot on" data-s="1">1<span class="st-lbl on">Type</span></div><div class="st-line"></div><div class="st-dot" data-s="2">2<span class="st-lbl">Details</span></div><div class="st-line"></div><div class="st-dot" data-s="3">3<span class="st-lbl">Message</span></div><div class="st-line"></div><div class="st-dot" data-s="4">4<span class="st-lbl">Style</span></div><div class="st-line"></div><div class="st-dot" data-s="5">5<span class="st-lbl">Extras</span></div><div class="st-line"></div><div class="st-dot" data-s="6">6<span class="st-lbl">Share</span></div></div>
+
+    <div class="sp on" data-p="1"><div class="gt-grid"><div class="gt" data-t="letter" onclick="pickType(this)"><svg viewBox="0 0 48 48"><rect x="4" y="12" width="40" height="26" rx="1" fill="none" stroke="#4A1225" stroke-width="1.5"/><polyline points="4,12 24,30 44,12" fill="none" stroke="#4A1225" stroke-width="1.5"/></svg><h4>Sealed Letter</h4><p>Classic and timeless</p></div><div class="gt" data-t="starmap" onclick="pickType(this)"><svg viewBox="0 0 48 48"><circle cx="24" cy="24" r="18" fill="none" stroke="#4A1225" stroke-width="1.5"/><circle cx="18" cy="20" r="1.5" fill="#9E4A5A"/></svg><h4>Star Map</h4><p>Your night sky</p></div><div class="gt" data-t="coupons" onclick="pickType(this)"><svg viewBox="0 0 48 48"><rect x="4" y="14" width="40" height="20" rx="1" fill="none" stroke="#4A1225" stroke-width="1.5" stroke-dasharray="3 2"/></svg><h4>Love Coupons</h4><p>Redeemable gestures</p></div><div class="gt" data-t="openwhen" onclick="pickType(this)"><svg viewBox="0 0 48 48"><rect x="10" y="16" width="28" height="18" rx="1" fill="none" stroke="#4A1225" stroke-width="1.5"/><polyline points="10,16 24,28 38,16" fill="none" stroke="#4A1225" stroke-width="1.5"/></svg><h4>Open When</h4><p>Letters for moments</p></div><div class="gt" data-t="timeline" onclick="pickType(this)"><svg viewBox="0 0 48 48"><line x1="24" y1="6" x2="24" y2="42" stroke="#4A1225" stroke-width="1.5"/><circle cx="24" cy="14" r="3" fill="none" stroke="#9E4A5A" stroke-width="1.5"/><circle cx="24" cy="30" r="3" fill="none" stroke="#9E4A5A" stroke-width="1.5"/></svg><h4>Our Story</h4><p>Timeline of milestones</p></div><div class="gt" data-t="recipe" onclick="pickType(this)"><svg viewBox="0 0 48 48"><rect x="10" y="8" width="28" height="32" rx="1" fill="none" stroke="#4A1225" stroke-width="1.5"/></svg><h4>Recipe of Us</h4><p>Ingredients of love</p></div></div><div class="sp-nav"><div></div><button class="btn-nx" onclick="goStep(2)" id="bn1" disabled>Continue</button></div></div>
+
+    <div class="sp" data-p="2"><div class="row2"><div class="ig"><label>Your Name</label><input id="iFrom" placeholder="Your name" maxlength="40"></div><div class="ig"><label>Their Name</label><input id="iTo" placeholder="Their name" maxlength="40"></div></div><div class="row2"><div class="ig"><label>Occasion</label><select id="iOcc"><option value="">Select an occasion</option><option>Anniversary</option><option>Birthday</option><option>Valentine's Day</option><option>Just Because</option><option>I Miss You</option><option>Apology</option><option>Proposal</option><option>Goodnight</option><option>Thank You</option><option>Our Beginning</option></select></div><div class="ig"><label>Significant Date</label><input id="iDate" type="date"></div></div><div class="ig" style="margin-bottom:1.5rem"><label>Describe Your Bond</label><select id="iRel"><option value="">Choose one</option><option>New and Unfolding</option><option>Deepening Every Day</option><option>Years of Devotion</option><option>Married, Still Enamored</option><option>Distance Cannot Dim This</option><option>From Friendship to Forever</option></select></div><div class="sp-nav"><button class="btn-bk" onclick="goStep(1)">Back</button><button class="btn-nx" onclick="goStep(3)">Continue</button></div></div>
+
+    <div class="sp" data-p="3"><div class="ig"><label>Subject (optional)</label><input id="iSubj" placeholder="A letter for you / What I have been meaning to say"></div><div class="ig" style="margin-top:1.2rem"><label>Your Words</label><textarea id="iMsg" placeholder="Write without restraint. There is no limit here.&#10;&#10;Write about the moment you knew. Write about the quiet things.&#10;&#10;Take all the space you need."></textarea></div><div class="cnt"><b id="charN">0</b> characters written</div><div class="sp-nav"><button class="btn-bk" onclick="goStep(2)">Back</button><button class="btn-nx" onclick="goStep(4)">Continue</button></div></div>
+
+    <div class="sp" data-p="4"><div class="ig" style="margin-bottom:.5rem"><label>Theme</label></div><div class="th-grid"><div class="th sel" data-th="rose" style="background:linear-gradient(135deg,#4A1225,#9E4A5A,#C88A94)" onclick="pickTheme(this)"></div><div class="th" data-th="midnight" style="background:linear-gradient(135deg,#08061A,#1E1848,#2A2060)" onclick="pickTheme(this)"></div><div class="th" data-th="champagne" style="background:linear-gradient(135deg,#3A2810,#8A6830,#C8A860)" onclick="pickTheme(this)"></div><div class="th" data-th="evergreen" style="background:linear-gradient(135deg,#0A1A0A,#2A4828,#3A6038)" onclick="pickTheme(this)"></div><div class="th" data-th="lavender" style="background:linear-gradient(135deg,#1A0A2A,#3A2868,#5A48A0)" onclick="pickTheme(this)"></div><div class="th" data-th="coral" style="background:linear-gradient(135deg,#3A1A1A,#8A4840,#A06858)" onclick="pickTheme(this)"></div><div class="th" data-th="noir" style="background:linear-gradient(135deg,#060606,#1E1E1E,#3A3A3A)" onclick="pickTheme(this)"></div><div class="th" data-th="autumn" style="background:linear-gradient(135deg,#1A0E00,#5A3820,#7A5030)" onclick="pickTheme(this)"></div></div><div style="margin-top:1.8rem"><div class="toggle-row"><span>Typewriter reveal for your message</span><div class="toggle on" data-opt="typewriter" onclick="togOpt(this)"></div></div><div class="toggle-row"><span>Falling "I love you" on open</span><div class="toggle on" data-opt="confetti" onclick="togOpt(this)"></div></div><div class="toggle-row"><span>Require a secret answer to unlock</span><div class="toggle" data-opt="puzzle" onclick="togOpt(this)"></div></div></div><div id="puzzleFields" style="display:none;margin-top:1.2rem"><div class="row2"><div class="ig"><label>Secret Question</label><input id="iPQ" placeholder="e.g. Where did we first say I love you?"></div><div class="ig"><label>Answer (not case sensitive)</label><input id="iPA" placeholder="e.g. under the oak tree"></div></div></div><div class="sp-nav"><button class="btn-bk" onclick="goStep(3)">Back</button><button class="btn-nx" onclick="goStep(5)">Continue</button></div></div>
+
+    <div class="sp" data-p="5"><div class="extra-section"><h4>Love Coupons</h4><p>Gestures they can redeem with you, anytime.</p><div id="couponList"></div><button class="btn-add" onclick="addCoupon()">+ Add a coupon</button></div><div class="extra-section"><h4>Open When Letters</h4><p>Sealed words for specific chapters of their life.</p><div id="owList"></div><button class="btn-add" onclick="addOW()">+ Add a letter</button></div><div class="extra-section"><h4>Milestones</h4><p>The dates and moments that shaped your story.</p><div id="tlList"></div><button class="btn-add" onclick="addTL()">+ Add a milestone</button></div><div class="sp-nav"><button class="btn-bk" onclick="goStep(4)">Back</button><button class="btn-nx" onclick="goStep(6)">Preview and Share</button></div></div>
+
+    <div class="sp" data-p="6"><div class="share-panel"><div class="icon-big"><svg viewBox="0 0 48 48"><rect x="6" y="14" width="36" height="24" rx="1"/><polyline points="6,14 24,30 42,14"/></svg></div><h3>Ready to Send</h3><p>Preview the experience, then share the link or QR code.</p><div style="margin-bottom:2rem"><button class="btn-cta" onclick="openExperience()" style="padding:.85rem 2.8rem;font-size:.85rem">Preview Gift</button></div><div class="qr-box"><img id="qrImg" alt="QR"></div><div class="link-row"><input id="giftLink" readonly><button class="btn-cp" id="btnCp" onclick="copyLink()">Copy</button></div><div class="share-row"><button class="sh-btn" onclick="shareNative()">Share</button><button class="sh-btn" onclick="shareWA()">WhatsApp</button><button class="sh-btn" onclick="shareEmail()">Email</button></div></div><div class="sp-nav"><button class="btn-bk" onclick="goStep(5)">Edit</button><button class="btn-nx" onclick="resetAll()">New Gift</button></div></div>
+  </div>
+</section>
+
+<div class="exp-overlay" id="expOverlay">
+  <button class="exp-close" onclick="closeExperience()">&times;</button>
+  <div class="exp-stage" id="expStage">
+    <div class="exp-bg" id="expBg"></div>
+    <canvas id="loveRain"></canvas>
+    <div class="puzzle-gate" id="puzzleGate"><div class="puzzle-card"><svg class="lock-icon" viewBox="0 0 40 40"><rect x="8" y="18" width="24" height="18" rx="2" fill="none" stroke="rgba(255,255,255,0.35)" stroke-width="1.5"/><path d="M14 18v-5a6 6 0 0112 0v5" fill="none" stroke="rgba(255,255,255,0.25)" stroke-width="1.5"/></svg><h3>This Gift is Sealed</h3><div class="puzzle-q" id="puzzleQText"></div><input type="text" id="puzzleAnswer" placeholder="Your answer"><button class="puzzle-btn" onclick="checkPuzzle()">Unlock</button><div class="puzzle-err" id="puzzleErr">That is not quite right. Try again.</div></div></div>
+
+    <div class="env-wrap" id="envWrap">
+      <div class="envelope" id="theEnvelope">
+        <div class="env-flap" id="envFlap"></div>
+        <div class="env-body" id="envBody"><div class="env-light" id="envLight"></div></div>
+        <div class="env-liner"></div>
+        <div class="env-card" id="envCard"></div>
+        <div class="seal" id="theSeal" onclick="openEnvelope()"><span class="seal-letter" id="sealLetter"></span></div>
+      </div>
+      <p class="env-hint">Break the seal</p>
+    </div>
+
+    <div class="letter-reveal" id="letterReveal"><div class="letter-paper"><div class="letter-deco-top"></div><div class="letter-names" id="lNames"></div><div class="letter-sub" id="lSub"></div><div class="letter-body" id="lBody"></div><div class="letter-sig" id="lSig"></div><div class="letter-deco-bot"></div></div></div>
+    <div class="coupon-stack" id="couponView"></div>
+    <div class="ow-stack" id="owView"></div>
+    <div class="tl-wrap" id="tlView"></div>
+    <div class="recipe-wrap" id="recipeView"></div>
+  </div>
+</div>
+
+<div class="ow-modal" id="owModal"><div class="ow-modal-inner"><button class="ow-modal-close" onclick="closeOWModal()">&times;</button><h3 id="owModalTitle"></h3><p id="owModalBody"></p></div></div>
+
+<footer><div class="f-logo">SEALED</div><p>Because some words deserve more than a message.</p><div class="f-line"></div><p>Crafted with intention.</p><div class="f-links"><a href="#">About</a><a href="#">Privacy</a><a href="#">Contact</a></div></footer>
+
+<script>
+const S={type:'',from:'',to:'',occasion:'',date:'',relationship:'',subject:'',message:'',theme:'rose',typewriter:true,confetti:true,puzzle:false,puzzleQ:'',puzzleA:'',coupons:[],openWhen:[],timeline:[]};
+const LOVE_WORDS=['I love you','Je t\'aime','Te amo','Ti amo','Aishiteru','Saranghae','Ich liebe dich','Eu te amo','Ana uhibbuka','Main tumse pyaar karta hoon','Wo ai ni','S\'agapo','Ya tebya lyublyu','Seni seviyorum','Ik hou van je','Jag aelskar dig','Kocham cie','Chan rak khun','Mahal kita','Aloha wau ia oe','Miluji te','Ljubim te','Min rakastan sinua','Te iubesc','Obicham te','Volim te','Elsker deg','Rakastan sinua','Aku cinta kamu','Anh yeu em','Ndiyakuthanda','Ngiyakuthanda','Kuyayki','Lyublyu tebya','Mahal kita','Saya cintamu','Ek het jou lief','Szczerze Cie kocham'];
+const lc=document.getElementById('loveRain'),lx=lc.getContext('2d');let drops=[],rainRunning=false;
+function resizeLoveCanvas(){const s=lc.parentElement;lc.width=s.offsetWidth;lc.height=s.offsetHeight;}
+resizeLoveCanvas();window.addEventListener('resize',resizeLoveCanvas);
+function startLoveRain(){drops=[];rainRunning=true;resizeLoveCanvas();for(let i=0;i<90;i++)spawnDrop(true);requestAnimationFrame(renderLoveRain);}
+function spawnDrop(scatter){const text=LOVE_WORDS[~~(Math.random()*LOVE_WORDS.length)];const size=16+Math.random()*14;drops.push({x:Math.random()*lc.width,y:scatter?Math.random()*lc.height:-size-Math.random()*500,text,speed:.2+Math.random()*.45,size,opacity:.08+Math.random()*.22,drift:(Math.random()-.5)*.08});}
+function renderLoveRain(){if(!rainRunning)return;lx.clearRect(0,0,lc.width,lc.height);for(let i=drops.length-1;i>=0;i--){const d=drops[i];d.y+=d.speed;d.x+=d.drift;if(d.y>lc.height+40){drops.splice(i,1);spawnDrop(false);continue;}lx.save();lx.globalAlpha=d.opacity;lx.font=`italic 500 ${d.size}px 'Playfair Display',Georgia,serif`;lx.fillStyle='rgba(255,245,238,0.92)';lx.textAlign='center';lx.textBaseline='middle';lx.fillText(d.text,d.x,d.y);lx.restore();}requestAnimationFrame(renderLoveRain);}
+function stopLoveRain(){rainRunning=false;drops=[];lx.clearRect(0,0,lc.width,lc.height);}
+
+window.addEventListener('scroll',()=>document.getElementById('nav').classList.toggle('shrink',window.scrollY>60));
+const obs=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting)e.target.classList.add('vis');}),{threshold:.1,rootMargin:'0px 0px -40px 0px'});
+document.querySelectorAll('.reveal,.g-card').forEach(el=>obs.observe(el));
+document.querySelectorAll('.g-card').forEach(c=>c.addEventListener('click',()=>{document.querySelector(`.gt[data-t="${c.dataset.type}"]`)?.click();document.getElementById('creator').scrollIntoView({behavior:'smooth',block:'start'});}));
+
+function goStep(n){saveInputs();if(n===2&&!S.type)return;document.querySelectorAll('.sp').forEach(p=>p.classList.remove('on'));document.querySelector(`[data-p="${n}"]`).classList.add('on');document.querySelectorAll('.st-dot').forEach(d=>{const s=+d.dataset.s;d.classList.remove('on','done');if(s<n)d.classList.add('done');if(s===n)d.classList.add('on');d.querySelector('.st-lbl').classList.toggle('on',s===n);});document.querySelectorAll('.st-line').forEach((l,i)=>l.classList.toggle('done',i<n-1));if(n===6){genLink();genQR();}document.getElementById('creator').scrollIntoView({behavior:'smooth',block:'start'});}
+function saveInputs(){S.from=document.getElementById('iFrom').value;S.to=document.getElementById('iTo').value;S.occasion=document.getElementById('iOcc').value;S.date=document.getElementById('iDate').value;S.relationship=document.getElementById('iRel').value;S.subject=document.getElementById('iSubj').value;S.message=document.getElementById('iMsg').value;S.puzzleQ=document.getElementById('iPQ').value;S.puzzleA=document.getElementById('iPA').value;S.coupons=[...document.querySelectorAll('#couponList input')].map(i=>i.value).filter(Boolean);S.openWhen=[...document.querySelectorAll('#owList .extra-item')].map(d=>({label:d.querySelector('.ow-l')?.value||'',body:d.querySelector('.ow-b')?.value||''})).filter(o=>o.label);S.timeline=[...document.querySelectorAll('#tlList .extra-item')].map(d=>({date:d.querySelector('.tl-d')?.value||'',text:d.querySelector('.tl-t')?.value||''})).filter(t=>t.text);}
+function pickType(el){document.querySelectorAll('.gt').forEach(g=>g.classList.remove('sel'));el.classList.add('sel');S.type=el.dataset.t;document.getElementById('bn1').disabled=false;}
+function pickTheme(el){document.querySelectorAll('.th').forEach(t=>t.classList.remove('sel'));el.classList.add('sel');S.theme=el.dataset.th;}
+function togOpt(el){el.classList.toggle('on');const k=el.dataset.opt;S[k]=el.classList.contains('on');if(k==='puzzle')document.getElementById('puzzleFields').style.display=S.puzzle?'block':'none';}
+document.getElementById('iMsg').addEventListener('input',function(){document.getElementById('charN').textContent=this.value.length.toLocaleString();});
+function addCoupon(){const d=document.createElement('div');d.className='extra-item';d.innerHTML='<input placeholder="e.g. One slow morning together"><button class="btn-rm" onclick="this.parentElement.remove()">&times;</button>';document.getElementById('couponList').appendChild(d);}
+function addOW(){const d=document.createElement('div');d.className='extra-item';d.style.cssText='flex-wrap:wrap;gap:.5rem';d.innerHTML='<input class="ow-l" placeholder="Open when... (e.g. you cannot sleep)" style="flex:1;min-width:140px"><input class="ow-b" placeholder="Your words for that moment..." style="flex:2;min-width:180px"><button class="btn-rm" onclick="this.parentElement.remove()">&times;</button>';document.getElementById('owList').appendChild(d);}
+function addTL(){const d=document.createElement('div');d.className='extra-item';d.style.cssText='flex-wrap:wrap;gap:.5rem';d.innerHTML='<input class="tl-d" placeholder="Date (e.g. June 2023)" style="flex:.6;min-width:120px"><input class="tl-t" placeholder="What happened..." style="flex:2;min-width:180px"><button class="btn-rm" onclick="this.parentElement.remove()">&times;</button>';document.getElementById('tlList').appendChild(d);}
+function genLink(){saveInputs();const id=btoa(unescape(encodeURIComponent(S.from+'|'+S.to+'|'+Date.now()))).replace(/[^a-zA-Z0-9]/g,'').slice(0,12);document.getElementById('giftLink').value=location.origin+location.pathname+'#gift='+id;}
+function genQR(){document.getElementById('qrImg').src='https://api.qrserver.com/v1/create-qr-code/?size=170x170&bgcolor=FDFBF8&color=4A1225&data='+encodeURIComponent(document.getElementById('giftLink').value);}
+function copyLink(){const b=document.getElementById('btnCp');navigator.clipboard.writeText(document.getElementById('giftLink').value).then(()=>{b.textContent='Copied';b.classList.add('done');setTimeout(()=>{b.textContent='Copy';b.classList.remove('done')},2000);});}
+function shareNative(){saveInputs();if(navigator.share)navigator.share({title:(S.from||'Someone')+' sent you a gift',text:'Open your gift',url:document.getElementById('giftLink').value});}
+function shareWA(){window.open('https://wa.me/?text='+encodeURIComponent('I made something for you: '+document.getElementById('giftLink').value),'_blank');}
+function shareEmail(){window.open(`mailto:?subject=${encodeURIComponent('A gift from '+(S.from||'someone'))}&body=${encodeURIComponent('Your gift awaits: '+document.getElementById('giftLink').value)}`);}
+
+/* ===== FAST CINEMATIC OPENING — ~2.5s total ===== */
+let envOpen=false;
+function resetEnvelopeAnim(){
+  const seal=document.getElementById('theSeal'),flap=document.getElementById('envFlap'),card=document.getElementById('envCard'),light=document.getElementById('envLight'),wrap=document.getElementById('envWrap'),env=document.getElementById('theEnvelope'),letter=document.getElementById('letterReveal');
+  seal.className='seal';seal.style.cssText='';
+  flap.className='env-flap';
+  card.className='env-card';
+  env.className='envelope';
+  light.style.opacity='';
+  wrap.className='env-wrap show';wrap.style.opacity='';wrap.style.transform='';
+  letter.classList.remove('show','entering');
+}
+function openExperience(){
+  saveInputs();envOpen=false;stopLoveRain();
+  document.getElementById('expOverlay').classList.add('open');document.body.style.overflow='hidden';
+  document.getElementById('expBg').className='exp-bg t-'+S.theme;
+  document.getElementById('sealLetter').textContent=(S.to||'S').charAt(0).toUpperCase();
+  document.getElementById('puzzleGate').classList.remove('show');
+  document.getElementById('envWrap').style.display='none';
+  ['couponView','owView','tlView','recipeView'].forEach(id=>{const e=document.getElementById(id);e.classList.remove('show');e.innerHTML='';});
+  const pp=document.querySelector('.letter-paper');pp.style.background='';pp.style.color='';
+  document.getElementById('lNames').style.color='';document.getElementById('lSub').style.color='';
+  document.getElementById('lBody').style.color='';document.getElementById('lSig').style.color='';
+  if(S.puzzle&&S.puzzleQ&&S.puzzleA){document.getElementById('puzzleQText').textContent=S.puzzleQ;document.getElementById('puzzleAnswer').value='';document.getElementById('puzzleErr').style.display='none';document.getElementById('puzzleGate').classList.add('show');}
+  else showEnvelope();
+}
+function checkPuzzle(){if(document.getElementById('puzzleAnswer').value.trim().toLowerCase()===S.puzzleA.trim().toLowerCase()){document.getElementById('puzzleGate').classList.remove('show');setTimeout(showEnvelope,300);}else{const err=document.getElementById('puzzleErr');err.style.display='block';err.style.animation='none';err.offsetHeight;err.style.animation='fadeUp .3s ease';}}
+document.addEventListener('keydown',e=>{if(e.key==='Enter'&&document.getElementById('puzzleGate').classList.contains('show'))checkPuzzle();});
+function showEnvelope(){resetEnvelopeAnim();document.getElementById('envWrap').style.display='';}
+function closeExperience(){document.getElementById('expOverlay').classList.remove('open');document.body.style.overflow='';stopLoveRain();}
+
+function openEnvelope(){
+  if(envOpen)return;envOpen=true;
+  const seal=document.getElementById('theSeal'),flap=document.getElementById('envFlap'),card=document.getElementById('envCard'),light=document.getElementById('envLight'),env=document.getElementById('theEnvelope'),wrap=document.getElementById('envWrap'),letter=document.getElementById('letterReveal');
+
+  // 0ms — Seal glows
+  seal.classList.add('glowing');
+
+  // 200ms — Seal bursts + love rain
+  setTimeout(()=>{seal.classList.remove('glowing');seal.classList.add('burst');if(S.confetti)startLoveRain();},200);
+
+  // 450ms — Flap folds back
+  setTimeout(()=>{flap.classList.add('opening');},450);
+
+  // 500ms — Warm light
+  setTimeout(()=>{light.style.opacity='1';},500);
+
+  // 650ms — Card rises above envelope
+  setTimeout(()=>{card.classList.add('rising');},650);
+
+  // 1400ms — Card settles
+  setTimeout(()=>{card.classList.remove('rising');card.classList.add('risen');},1400);
+
+  // 1600ms — Envelope dissolves
+  setTimeout(()=>{env.classList.add('dissolving');},1600);
+
+  // 1900ms — Wrapper fades
+  setTimeout(()=>{wrap.classList.add('fading');},1900);
+
+  // 2200ms — Letter appears
+  setTimeout(()=>{wrap.style.display='none';letter.classList.add('show','entering');showContent();},2200);
+}
+
+function showContent(){if(S.type==='recipe'){showRecipe();return;}if(S.type==='starmap'){showStarMap();return;}if(S.type==='timeline'){showTimelineFull();return;}showLetter();}
+function showLetter(){const lr=document.getElementById('letterReveal');lr.classList.add('show','entering');document.getElementById('lNames').textContent=(S.from||'Me')+' & '+(S.to||'You');document.getElementById('lSub').textContent=S.subject||(S.occasion?'For '+S.occasion:'A gift from the heart');document.getElementById('lSig').textContent='With love, '+(S.from||'Me');const body=document.getElementById('lBody'),msg=S.message||'You are the most remarkable person I know.';if(S.typewriter){body.innerHTML='';let i=0;const cur=document.createElement('span');cur.className='cursor';body.appendChild(cur);function tN(){if(i<msg.length){body.insertBefore(document.createTextNode(msg.charAt(i)),cur);i++;setTimeout(tN,msg.charAt(i-1)==='\n'?300:14+Math.random()*18);}else{setTimeout(()=>{cur.remove();showExtras();},600);}}tN();}else{body.textContent=msg;setTimeout(showExtras,600);}}
+function showRecipe(){const rv=document.getElementById('recipeView');rv.classList.add('show');rv.innerHTML=`<div class="recipe-paper"><h3>A Recipe for ${(S.from||'Me')+' & '+(S.to||'You')}</h3><div class="r-sub">${S.occasion||'Crafted with devotion'}</div><div class="r-section"><h4>Ingredients</h4><div class="r-item">Two cups of shared silence</div><div class="r-item">A generous measure of patience</div><div class="r-item">Midnight conversations that never end</div><div class="r-item">The willingness to be known fully</div><div class="r-item">An abundance of small, ordinary days</div><div class="r-item">The way you reach for each other without thinking</div></div><div class="r-section"><h4>Method</h4><div class="r-item">Begin with honesty. Always.</div><div class="r-item">Fold in tenderness generously.</div><div class="r-item">Allow to settle through seasons of difficulty and ease.</div><div class="r-item">Stir in acts of quiet devotion daily.</div><div class="r-item">Season with forgiveness, as needed and often.</div><div class="r-item">Serve warm, without condition, every single day.</div></div><div class="r-section"><h4>A Note</h4><div class="r-item" style="white-space:pre-wrap;border-left-color:var(--wine)">${esc(S.message||'You are the finest thing I know.')}</div></div><div class="letter-sig">${esc('With love, '+(S.from||'Me'))}</div><div class="letter-deco-bot"></div></div>`;}
+function showStarMap(){const lr=document.getElementById('letterReveal');lr.classList.add('show','entering');const pp=document.querySelector('.letter-paper');pp.style.background='linear-gradient(135deg,#08061A,#14102A,#0A0820)';pp.style.color='#D8D0E8';document.getElementById('lNames').style.color='#F0E8FF';document.getElementById('lSub').textContent=S.date?'The sky on '+new Date(S.date).toLocaleDateString('en-US',{year:'numeric',month:'long',day:'numeric'}):S.occasion||'Your night sky';document.getElementById('lSub').style.color='rgba(255,255,255,0.35)';const body=document.getElementById('lBody');let stars='';for(let i=0;i<80;i++){const x=Math.random()*100,y=Math.random()*70,s=Math.random()*2.5+.8,o=Math.random()*.5+.15;stars+=`<div style="position:absolute;left:${x}%;top:${y}%;width:${s}px;height:${s}px;background:white;border-radius:50%;opacity:${o};animation:blink ${2+Math.random()*4}s ease-in-out infinite ${Math.random()*3}s"></div>`;}body.innerHTML=`<div style="position:relative;height:180px;margin-bottom:2rem">${stars}</div>`+esc(S.message||'Written in the stars.');body.style.color='#C8C0E0';document.getElementById('lSig').style.color='#A098C0';document.getElementById('lSig').textContent='Written in the stars, by '+(S.from||'Me');setTimeout(showExtras,400);}
+function showTimelineFull(){const tv=document.getElementById('tlView');tv.classList.add('show');let html='';const items=S.timeline.length?S.timeline:[{date:'Today',text:S.message}];items.forEach((t,i)=>{html+=`<div class="tl-item" style="transition-delay:${i*.12}s"><div class="tl-dot-col"><div class="tl-dot"></div>${i<items.length-1?'<div class="tl-vline"></div>':''}</div><div class="tl-content"><div class="tl-date">${esc(t.date)}</div><div class="tl-text">${esc(t.text)}</div></div></div>`;});if(S.message&&S.timeline.length)html+=`<div class="tl-item" style="transition-delay:${items.length*.12}s"><div class="tl-dot-col"><div class="tl-dot"></div></div><div class="tl-content"><div class="tl-date">A final thought</div><div class="tl-text">${esc(S.message)}</div></div></div>`;tv.innerHTML=html;setTimeout(()=>tv.querySelectorAll('.tl-item').forEach(el=>el.classList.add('vis')),150);}
+function showExtras(){if(S.coupons.length){const cv=document.getElementById('couponView');cv.innerHTML='';S.coupons.forEach((c,i)=>{const card=document.createElement('div');card.className='cp-card';card.innerHTML=`<div class="cp-face cp-front">Coupon ${i+1}</div><div class="cp-face cp-back">${esc(c)}</div>`;card.addEventListener('click',()=>card.classList.toggle('flipped'));cv.appendChild(card);});cv.classList.add('show');}if(S.openWhen.length){const ov=document.getElementById('owView');ov.innerHTML='';S.openWhen.forEach(o=>{const env=document.createElement('div');env.className='ow-env';env.innerHTML=`<span>${esc(o.label)}</span>`;env.addEventListener('click',()=>{env.classList.add('opened');showOWM(o.label,o.body);});ov.appendChild(env);});ov.classList.add('show');}}
+function showOWM(t,b){document.getElementById('owModalTitle').textContent='Open when '+t;document.getElementById('owModalBody').textContent=b||'I am thinking of you.';document.getElementById('owModal').classList.add('open');}
+function closeOWModal(){document.getElementById('owModal').classList.remove('open');}
+function esc(s){const d=document.createElement('div');d.textContent=s;return d.innerHTML;}
+function resetAll(){Object.assign(S,{type:'',from:'',to:'',occasion:'',date:'',relationship:'',subject:'',message:'',theme:'rose',typewriter:true,confetti:true,puzzle:false,puzzleQ:'',puzzleA:'',coupons:[],openWhen:[],timeline:[]});['iFrom','iTo','iDate','iRel','iSubj','iMsg','iPQ','iPA'].forEach(id=>{const e=document.getElementById(id);if(e)e.value='';});document.getElementById('iOcc').selectedIndex=0;document.getElementById('charN').textContent='0';document.querySelectorAll('.gt').forEach(g=>g.classList.remove('sel'));document.querySelectorAll('.th').forEach(t=>t.classList.remove('sel'));document.querySelector('[data-th="rose"]').classList.add('sel');document.querySelectorAll('.toggle').forEach(t=>{if(t.dataset.opt==='typewriter'||t.dataset.opt==='confetti')t.classList.add('on');else t.classList.remove('on');});document.getElementById('puzzleFields').style.display='none';['couponList','owList','tlList'].forEach(id=>document.getElementById(id).innerHTML='');document.getElementById('bn1').disabled=true;goStep(1);}
+</script>
+</body>
+</html>
